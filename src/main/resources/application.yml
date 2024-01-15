@@ -1,0 +1,31 @@
+spring:
+  kafka:
+    listener:
+      ack-mode: manual_immediate
+    consumer:
+      group-id: flink-kafka
+      topic-id: txn-flink
+      concurrency: 2
+      bootstrap-servers: localhost:9092, localhost:9093, localhost:9094
+      enable-auto-commit: false
+    producer:
+      bootstrap-servers: localhost:9092, localhost:9093, localhost:9094
+      topic-id: txn-flink
+  redis:
+    ttl: 10000
+    prefix: kkkk
+    consumer-prefix: ONSUMER
+    redisson:
+      config: |
+        singleServerConfig:
+          connectTimeout: 1000
+          address: "redis://localhost:6379"
+          tcpNoDelay: true
+          keepAlive: true
+          pingConnectionInterval: 60000
+server:
+  port: 8080
+
+
+
+
