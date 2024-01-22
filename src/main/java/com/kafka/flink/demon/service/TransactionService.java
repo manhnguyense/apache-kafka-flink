@@ -22,9 +22,10 @@ public class TransactionService {
 
     public Transaction processTxn(final Transaction txn) {
         txn.setStatus(PROCESSING);
+        txn.setTransTime(String.valueOf(System.currentTimeMillis()));
         final String message = gson.toJson(txn);
         RBucket<String> bucket = redissonClient.getBucket(String.valueOf(txn.getTransId()));
-        bucket.set(message, 10000, TimeUnit.SECONDS);
+        bucket.set(message, 1000, TimeUnit.SECONDS);
         kafkaProducer.send(message);
         return txn;
     }
@@ -39,6 +40,6 @@ public class TransactionService {
         final String message = bucket.get();
         Transaction transaction = gson.fromJson(message, Transaction.class);
         transaction.setStatus(SUCCESS);
-        bucket.set(gson.toJson(transaction), 10000, TimeUnit.SECONDS);
+        bucket.set(gson.toJson(transaction), 1000, TimeUnit.SECONDS);
     }
 }

@@ -3,14 +3,14 @@ spring:
     listener:
       ack-mode: manual_immediate
     consumer:
-      group-id: flink-kafka
-      topic-id: txn-flink
+      group-id: flink-kafka-cons
+      topic-id: txn-flink-cons
       concurrency: 2
       bootstrap-servers: localhost:9092, localhost:9093, localhost:9094
       enable-auto-commit: false
     producer:
       bootstrap-servers: localhost:9092, localhost:9093, localhost:9094
-      topic-id: txn-flink
+      topic-id: txn-flink-prod
   redis:
     ttl: 10000
     prefix: kkkk
